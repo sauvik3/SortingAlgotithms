@@ -1,4 +1,3 @@
-#include <iostream>
 #include "BubbleSort.h"
 #include "Utils.h"
 
@@ -9,7 +8,9 @@ void bubble_sort(int *input_array, int length) {
 				std::swap(input_array[j], input_array[j + 1]);
 			}
 		}
-		std::cout << "Pass " << i << " -> ";
-		print(input_array, length);
+#ifdef ENABLE_LOGGING
+		LOG("Pass %d -> ", i);
+		print_array(input_array, length);
+#endif
 	}
 }

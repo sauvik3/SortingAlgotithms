@@ -1,4 +1,3 @@
-#include <iostream>
 #include "InsertionSort.h"
 #include "Utils.h"
 
@@ -19,7 +18,9 @@ void insert_at_ind(int *input_array, int length, int ele) {
 void insertion_sort(int *input_array, int length) {
 	for (auto i = 1; i < length; ++i) {
 		insert_at_ind(input_array, i, input_array[i]);
-		std::cout << "Pass " << i - 1 << " -> ";
-		print(input_array, length);
+#ifdef ENABLE_LOGGING
+		LOG("Pass %d -> ", i-1);
+		print_array(input_array, length);
+#endif
 	}
 }

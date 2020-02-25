@@ -1,7 +1,6 @@
 #include <iostream>
 #include <array>
 #include <functional>
-
 #include "Utils.h"
 #include "BubbleSort.h"
 #include "SelectionSort.h"
@@ -14,9 +13,11 @@ int main()
 	//std::array<int, 8> test_array = { 1, 5, 4, 0, 7, 2, 9, 3 };
 	auto lambda = [test_array](const std::function<void(int *, int)> &sorting_alg) mutable {
 		auto n = static_cast<int>(test_array.size());
+		std::cout << "Initial => ";
+		print_array(test_array.data(), n);
 		sorting_alg(test_array.data(), n);
-		std::cout << "=> ";
-		print(test_array.data(), n);
+		std::cout << "Result => ";
+		print_array(test_array.data(), n);
 		std::cout << std::endl;
 	};
 

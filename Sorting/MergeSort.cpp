@@ -1,4 +1,3 @@
-#include <iostream>
 #include <memory>
 #include "MergeSort.h"
 #include "Utils.h"
@@ -34,8 +33,10 @@ void merge_sort_recursive(int *input_array, int length, int &counter) {
 		merge_sort_recursive(input_array, mid, counter);
 		merge_sort_recursive(input_array + mid, length - mid, counter);
 		merge(input_array, length);
-		std::cout << "Pass " << counter++ << " -> ";
-		print(input_array, length);
+#ifdef ENABLE_LOGGING
+		LOG("Pass %d -> ", counter++);
+		print_array(input_array, length);
+#endif
 	}
 }
 

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 
-void print(int *input_array, int length);
+void print_array(int *input_array, int length);
 
 template <int n>
 std::array<int, n> create_random_data(const int range_from = 0, const int range_to = 100) {
@@ -15,3 +15,26 @@ std::array<int, n> create_random_data(const int range_from = 0, const int range_
 	std::generate(data_gen.begin(), data_gen.end(), std::bind(distr, generator));
 	return  data_gen;
 }
+
+class logger
+{
+public:
+	static logger& instance()
+	{
+		static logger entity;
+		return entity;
+	}
+
+	void log(const char * format, ...) const;
+
+	logger(logger &) = delete;
+	logger(logger &&) = delete;
+	logger &operator=(const logger &) = delete;
+	logger &operator=(logger &&) = delete;
+
+private:
+	logger() {}
+	~logger() {}
+};
+
+#define LOG(format, ...) logger::instance().log(format, __VA_ARGS__)
