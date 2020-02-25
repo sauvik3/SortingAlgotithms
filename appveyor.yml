@@ -1,0 +1,17 @@
+version: 1.0.{build}
+configuration: Release
+platform: x86
+build:
+  project: SortingAlgorithms.sln
+  verbosity: minimal
+test_script:
+- cmd: vstest.console Release\x86\UnitTests.dll /logger:Appveyor
+artifacts:
+- path: Release
+  name: SortingAlgotithms
+environment:
+    COVERALLS_REPO_TOKEN:  
+       secure: baO9xvs6PPZEeljwyZ1BE2bCtK0r86BD6
+after_test:
+    - cmd: packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" -targetargs:"/testcontainer:Release/x86/UnitTests.dll" -output:coverage.xml        
+    - cmd: packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
