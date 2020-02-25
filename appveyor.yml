@@ -1,6 +1,9 @@
 version: 1.0.{build}
 configuration: Release
 platform: x86
+install:
+  - nuget install OpenCover -OutputDirectory tools
+  - nuget install coveralls.net -Pre -OutputDirectory tools
 build:
   project: SortingAlgorithms.sln
   verbosity: minimal
@@ -13,5 +16,10 @@ environment:
     COVERALLS_REPO_TOKEN:  
        secure: baO9xvs6PPZEeljwyZ1BE2bCtK0r86BD6
 after_test:
+    - ps: >-
+    $opencov = (Resolve-Path "tools/OpenCover.*/tools/OpenCover.Console.exe").ToString();
+    $coveralls = (Resolve-Path "tools/coveralls.net.*/tools/csmacnz.coveralls.exe").ToString();
+    Write-Host "opencov: $opencov"
+    Write-Host "coveralls: $coveralls"
     - cmd: packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" -targetargs:"/testcontainer:Release/x86/UnitTests.dll" -output:coverage.xml        
     - cmd: packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
