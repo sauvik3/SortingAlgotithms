@@ -1,7 +1,8 @@
 version: 1.0.{build}
 
-install:
-    - nuget restore
+image:
+  Visual Studio 2015
+
     
 build:
   project: SortingAlgotithms.sln
