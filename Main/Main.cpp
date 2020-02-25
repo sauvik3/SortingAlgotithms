@@ -9,7 +9,7 @@
 #include "InsertionSort.h"
 #include "MergeSort.h"
 
-#define SHOW_SORT
+//#define SHOW_SORT
 
 
 int main()
