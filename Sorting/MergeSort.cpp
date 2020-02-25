@@ -1,4 +1,5 @@
 #include <memory>
+#include <cstring>
 #include "MergeSort.h"
 #include "Utils.h"
 
