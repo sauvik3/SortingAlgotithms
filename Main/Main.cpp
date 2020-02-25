@@ -8,6 +8,7 @@
 #include "SelectionSort.h"
 #include "InsertionSort.h"
 #include "MergeSort.h"
+#include "QuickSort.h"
 
 //#define SHOW_SORT
 
@@ -47,6 +48,7 @@ int main()
 	auto do_selection_sort = std::bind(lambda, selection_sort);
 	auto do_insertion_sort = std::bind(lambda, insertion_sort);
 	auto do_merge_sort = std::bind(lambda, merge_sort);
+	auto do_quick_sort = std::bind(lambda, quick_sort);
 
 	std::cout << "Bubble Sort :" << std::endl;
 	do_bubble_sort();
@@ -56,6 +58,8 @@ int main()
 	do_insertion_sort();
 	std::cout << "Merge Sort :" << std::endl;
 	do_merge_sort();
+	std::cout << "Quick Sort :" << std::endl;
+	do_quick_sort();
 
 	system("pause");
 	return 0;
