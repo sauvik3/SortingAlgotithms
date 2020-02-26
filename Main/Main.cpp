@@ -10,13 +10,13 @@
 #include "MergeSort.h"
 #include "QuickSort.h"
 
-//#define SHOW_SORT
+#define SHOW_SORT
 
 
 int main()
 {
 	auto test_array = create_random_data<12>(0, 100);
-	//std::array<int, 8> test_array = { 1, 5, 4, 0, 7, 2, 9, 3 };
+	//std::array<int, 12> test_array = { 85, 52, 17, 25, 47, 99, 34, 85, 31, 57, 84, 74 };
 	auto lambda = [test_array](const std::function<void(int *, int)> &sorting_alg) mutable {
 		auto n = static_cast<int>(test_array.size());
 #ifdef SHOW_SORT
