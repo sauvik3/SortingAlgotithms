@@ -6,8 +6,6 @@ before_build:
 build:
   project: SortingAlgorithms.sln
   verbosity: minimal
-after_build:
-- cmd: valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes --trace-children=yes ./Debug/x86/Main.exe
 test_script:
   - cmd: packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vSTest.console.exe" -targetargs:"C:\projects\SortingAlgotithms\Debug\x86\UnitTests.dll /Platform:x86 /logger:Appveyor" -output:coverage.xml
 artifacts:
