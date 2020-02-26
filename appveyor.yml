@@ -1,6 +1,8 @@
 version: 1.0.{build}
 configuration: Release
 platform: x86
+before_build:
+  - nuget restore
 build:
   project: SortingAlgorithms.sln
   verbosity: minimal
