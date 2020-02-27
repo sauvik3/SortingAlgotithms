@@ -14,15 +14,11 @@ void merge(int *input_array, int length) {
 		for (; ar1 < input_array + mid && ar2 < input_array + length;) {
 			buffer[i++] = (*ar1 > *ar2 ? *ar2++ : *ar1++);
 		}
-		if (ar1 < input_array + mid) {
-			for (; ar1 < input_array + mid; ) {
-				buffer[i++] = *ar1++;
-			}
+		while (ar1 < input_array + mid) {
+			buffer[i++] = *ar1++;
 		}
-		else if (ar2 < input_array + length) {
-			for (; ar2 < input_array + length; ) {
-				buffer[i++] = *ar2++;
-			}
+		while (ar2 < input_array + length) {
+			buffer[i++] = *ar2++;
 		}
 		std::memcpy(input_array, buffer.get(), length * sizeof(int));
 	}

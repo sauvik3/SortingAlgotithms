@@ -7,7 +7,7 @@ build:
   project: SortingAlgorithms.sln
   verbosity: minimal
 test_script:
-  - cmd: packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vSTest.console.exe" -targetargs:"C:\projects\SortingAlgotithms\Debug\x86\UnitTests.dll /Platform:x86 /logger:Appveyor" -output:coverage.xml
+  - cmd: packages\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vSTest.console.exe" -targetargs:"Debug\x86\UnitTests.dll /Platform:x86 /logger:Appveyor" -output:coverage.xml
 artifacts:
   - path: Debug
     name: SortingAlgotithms

@@ -10,7 +10,7 @@
 #include "MergeSort.h"
 #include "QuickSort.h"
 
-#define SHOW_SORT
+//#define SHOW_SORT
 
 
 int main()

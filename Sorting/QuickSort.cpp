@@ -4,16 +4,15 @@
 int get_partition_ind(int input_array[], int left, int right)
 {
 	auto &pivot = input_array[right];
-	auto next_ind = left - 1;
+	auto next_ind = left;
 
 	for (auto i = left; i < right; ++i) {
 		if (input_array[i] < pivot) {
-			++next_ind;
-			std::swap(input_array[next_ind], input_array[i]);
+			std::swap(input_array[next_ind++], input_array[i]);
 		}
 	}
-	std::swap(input_array[next_ind + 1], pivot);
-	return next_ind + 1;
+	std::swap(input_array[next_ind], pivot);
+	return next_ind;
 }
 
 void quick_sort_recursive(int * input_array, int left, int right, int &counter)
@@ -24,7 +23,7 @@ void quick_sort_recursive(int * input_array, int left, int right, int &counter)
 		quick_sort_recursive(input_array, pivot + 1, right, counter);
 #ifdef ENABLE_LOGGING
 		LOG("Pass %d -> ", counter++);
-		print_array(input_array, right - left);
+		print_array(input_array, right - left + 1);
 #endif
 	}
 }
