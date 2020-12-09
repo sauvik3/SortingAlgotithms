@@ -8,3 +8,11 @@ C-Style implementation of basic Sorting Algorithms:
 * Insertion Sort
 * Merge Sort
 * Quick Sort
+
+This project was started to study following:
+* CMake build system
+* GoogleTest Framework
+* GoogleBench Framework
+* Generate Code Coverage
+
+The project can build as cross-platform, and has option for building as static or shared library.
