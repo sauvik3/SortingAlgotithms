@@ -27,7 +27,7 @@ namespace UnitTestData
 
 	const auto bigArray = create_random_data<256>(std::numeric_limits<int>::min(),
 		std::numeric_limits<int>::max());
-	const auto SortBigArray()
+	const std::vector<int> SortBigArray()
 	{
 		std::vector<int> bigArraySorted(bigArray.begin(), bigArray.end());
 		std::sort(bigArraySorted.begin(), bigArraySorted.end());
