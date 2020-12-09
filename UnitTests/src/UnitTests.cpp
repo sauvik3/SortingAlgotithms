@@ -32,7 +32,7 @@ namespace UnitTestData
 		std::vector<int> bigArraySorted(bigArray.begin(), bigArray.end());
 		std::sort(bigArraySorted.begin(), bigArraySorted.end());
 		return bigArraySorted;
-	};
+	}
 
 
 	const int constexpr min = std::numeric_limits<int>::min();

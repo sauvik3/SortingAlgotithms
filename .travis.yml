@@ -1,22 +1,57 @@
 dist: trusty
 sudo: false
-language: cpp
+language: c++
+
+cache: ccache
+
+notifications:
+  email: false
+
+env:
+  global:
+  matrix:
+    - TRAVIS_EMPTY_JOB_WORKAROUND=true
 
 addons:
   apt:
-    sources:
+    sources: &apt_sources
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-5.0
-    packages:
-      - g++-6
-      - clang-5.0
+
+compiler: gcc
+os: linux
+
+matrix:
+  exclude:
+    - env: TRAVIS_EMPTY_JOB_WORKAROUND=true
+
+  include:
+    # GCC 4.8
+    - env: COMPILER=g++-4.8 BUILD_TYPE=Debug CPP=11 CODE_COVERAGE=true
+      compiler: gcc
+      addons: &gcc48
+        apt:
+          packages: ["g++-4.8", "g++-4.8-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          sources: *apt_sources
+
+    # GCC 6
+    - env: COMPILER=g++-6 BUILD_TYPE=Debug CPP=11
+      compiler: gcc
+      addons: &gcc6
+        apt:
+          packages: ["g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          sources: *apt_sources
 
 before_install:
   - pip install --user cpp-coveralls
+  - mkdir -p build && cd build
 
 script:
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake -DCOVERAGE=1 .
-  - cmake --build . 
+  - cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_C_FLAGS="${EXTRA_FLAGS}" -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS} ${EXTRA_CXX_FLAGS}" ${EXTRA_OPTIONS} ..
+  - make all
+  - valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes --trace-children=yes ./Main/Main
 
 after_success:
-  - coveralls --root . -E ".*CMakeFiles.*"
+  - if [ -n "${CODE_COVERAGE}" ]; then
+      coveralls --include src --include include --gcov-options '\-lp' --root .. --build-root .;
+    fi
