@@ -26,12 +26,21 @@ matrix:
     - env: TRAVIS_EMPTY_JOB_WORKAROUND=true
 
   include:
-    # GCC 4.8
-    - env: COMPILER=g++-4.8 BUILD_TYPE=Debug CPP=11 CODE_COVERAGE=true
+
+    # GCC 6
+    - env: COMPILER=g++-6 BUILD_TYPE=Coverage CPP=11
       compiler: gcc
-      addons: &gcc48
+      addons: &gcc6
         apt:
-          packages: ["g++-4.8", "g++-4.8-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          packages: ["g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          sources: *apt_sources
+
+    # GCC 6
+    - env: COMPILER=g++-6 BUILD_TYPE=Release CPP=11
+      compiler: gcc
+      addons: &gcc6
+        apt:
+          packages: ["g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
           sources: *apt_sources
 
     # GCC 6
