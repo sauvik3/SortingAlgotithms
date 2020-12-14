@@ -17,6 +17,10 @@ set(SOURCE_FILES
 
 add_executable(Main ${SOURCE_FILES})
 
+if(NOT MSVC)
+    target_compile_options(Main PUBLIC -Wall -pedantic)
+endif(NOT MSVC)
+
 if(USE_SHARED)
 	add_definitions(-DUSE_SHARED)
 	add_definitions(-DDLL_IMPORTS)
