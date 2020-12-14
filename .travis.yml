@@ -2,7 +2,9 @@ dist: trusty
 sudo: false
 language: c++
 
-cache: ccache
+cache: # see https://docs.travis-ci.com/user/caching/
+- directories:
+  - $HOME/.cache
 
 notifications:
   email: false
@@ -28,7 +30,7 @@ matrix:
   include:
 
     # GCC 6
-    - env: COMPILER=g++-6 BUILD_TYPE=Coverage CPP=11 CFLAGS="-fprofile-arcs -ftest-coverage" LFLAGS="-lgcov --coverage"
+    - env: COMPILER=g++-6 BUILD_TYPE=Debug CODE_COVERAGE=ON
       compiler: gcc
       addons: &gcc6
         apt:
@@ -36,7 +38,7 @@ matrix:
           sources: *apt_sources
 
     # GCC 6
-    - env: COMPILER=g++-6 BUILD_TYPE=Release CPP=11
+    - env: COMPILER=g++-6 BUILD_TYPE=Release
       compiler: gcc
       addons: &gcc6
         apt:
@@ -44,7 +46,7 @@ matrix:
           sources: *apt_sources
 
     # GCC 6
-    - env: COMPILER=g++-6 BUILD_TYPE=Debug CPP=11
+    - env: COMPILER=g++-6 BUILD_TYPE=Debug
       compiler: gcc
       addons: &gcc6
         apt:
@@ -52,14 +54,16 @@ matrix:
           sources: *apt_sources
 
 before_install:
-  - pip install --user cpp-coveralls
   - mkdir -p build && cd build
 
 script:
-  - cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_C_FLAGS="${EXTRA_FLAGS}" -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS} ${EXTRA_CXX_FLAGS}" ${EXTRA_OPTIONS} ..
-  - make all
+  - cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCODE_COVERAGE=${CODE_COVERAGE} -DCMAKE_C_FLAGS="${EXTRA_FLAGS}" -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS} ${EXTRA_CXX_FLAGS}" ${EXTRA_OPTIONS} ..
+  - cmake --build . --config ${BUILD_TYPE} -- -j $(nproc)
   - valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes --trace-children=yes ./Main/Main
 
 after_success:
-  - if [ -n "${CODE_COVERAGE}" ]; then coveralls --include src --include include --gcov-options '\-lp' --root .. --build-root .; fi    
-  - if [ -n "${CODE_COVERAGE}" ]; then bash <(curl -s https://codecov.io/bash); fi
+  - ctest -j $(nproc) --output-on-failure
+  - if [ -n "${CODE_COVERAGE}" ]; then lcov --directory . --capture --output-file coverage.info; fi
+  - if [ -n "${CODE_COVERAGE}" ]; then lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info; fi
+  - if [ -n "${CODE_COVERAGE}" ]; then lcov --list coverage.info; fi
+  - if [ -n "${CODE_COVERAGE}" ]; then bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"; fi
