@@ -1,5 +1,12 @@
 project(UnitTests LANGUAGES CXX)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required (VERSION 3.1)
+
+# Use C++11
+set(CMAKE_CXX_STANDARD 14)
+# Require (at least) it
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Don't use e.g. GNU extension (like -std=gnu++11) for portability
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -17,6 +24,10 @@ set(SOURCE_FILES
 )
 
 add_executable(UnitTests ${SOURCE_FILES})
+
+if(NOT MSVC)
+    target_compile_options(UnitTests PUBLIC -Wall -pedantic)
+endif(NOT MSVC)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest/googletest-download/CMakeLists.txt)
@@ -59,9 +70,9 @@ if(USE_SHARED)
 	add_definitions(-DUSE_SHARED)
 	add_definitions(-DDLL_IMPORTS)
 	target_link_libraries(UnitTests Sorting_shared gtest gtest_main)
-else()
+else(USE_SHARED)
     target_link_libraries(UnitTests Sorting_static gtest gtest_main)
-endif()
+endif(USE_SHARED)
 
 # Make the test runnable with
 # $ make test

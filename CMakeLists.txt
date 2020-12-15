@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 3.1)
 project(SortingAlgotithms LANGUAGES CXX)
+cmake_minimum_required (VERSION 3.1)
 
 # Use C++11
 set(CMAKE_CXX_STANDARD 14)
@@ -37,5 +37,4 @@ if (BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
   enable_testing()
   add_subdirectory(UnitTests)
   add_subdirectory (BenchmarkTests)
-endif()
-
+endif(BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))

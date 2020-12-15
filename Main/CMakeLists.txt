@@ -1,5 +1,12 @@
 project(Main LANGUAGES CXX)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required (VERSION 3.1)
+
+# Use C++11
+set(CMAKE_CXX_STANDARD 14)
+# Require (at least) it
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Don't use e.g. GNU extension (like -std=gnu++11) for portability
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -25,6 +32,6 @@ if(USE_SHARED)
 	add_definitions(-DUSE_SHARED)
 	add_definitions(-DDLL_IMPORTS)
 	target_link_libraries(Main PRIVATE Sorting_shared)
-else()
+else(USE_SHARED)
     target_link_libraries(Main PRIVATE Sorting_static)
-endif()
+endif(USE_SHARED)

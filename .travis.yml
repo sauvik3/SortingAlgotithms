@@ -1,6 +1,6 @@
 dist: trusty
-sudo: false
-language: c++
+root: false
+language: cpp
 
 cache: # see https://docs.travis-ci.com/user/caching/
 - directories:
@@ -11,7 +11,7 @@ notifications:
 
 env:
   global:
-  matrix:
+  jobs:
     - TRAVIS_EMPTY_JOB_WORKAROUND=true
 
 addons:
@@ -23,7 +23,7 @@ addons:
 compiler: gcc
 os: linux
 
-matrix:
+jobs:
   exclude:
     - env: TRAVIS_EMPTY_JOB_WORKAROUND=true
 
