@@ -26,5 +26,5 @@ build:
   verbosity: minimal
   
 artifacts:
-  - path: build/$(CONFIGURATION)
-    name: build/$(CONFIGURATION)
+  - path: build
+    name: build
