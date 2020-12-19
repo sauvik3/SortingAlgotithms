@@ -58,7 +58,7 @@ before_install:
 script:
   - cmake -DCMAKE_C_COMPILER=${C_COMPILER} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCODE_COVERAGE=${CODE_COVERAGE} -DCMAKE_C_FLAGS="${EXTRA_FLAGS}" -DCMAKE_CXX_FLAGS="${EXTRA_FLAGS} ${EXTRA_CXX_FLAGS}" ${EXTRA_OPTIONS} ..
   - cmake --build . --config ${BUILD_TYPE} -- -j $(nproc)
-  - valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes --trace-children=yes ./Main/Main
+  - valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes --trace-children=yes build/Main
 
 after_success:
   - ctest -j $(nproc) --output-on-failure
