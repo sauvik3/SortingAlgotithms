@@ -33,9 +33,12 @@ build:
   verbosity: minimal
   
 test_script:
-- cmd: |
-    ctest -C $(configuration) --output-on-failure
+- ps: |
+    ctest -C $env:CONFIGURATION --output-on-failure
+    if ($LastExitCode -ne 0) {
+        throw "Exec: $ErrorMessage"
+    }
   
 artifacts:
-  - path: build/$(configuration)
+  - path: build/%CONFIGURATION%
     name: artifacts
