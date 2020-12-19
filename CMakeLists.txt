@@ -8,10 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Don't use e.g. GNU extension (like -std=gnu++11) for portability
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-
 # Code Coverage Configuration
 add_library(coverage_config INTERFACE)
 
@@ -41,3 +37,30 @@ if (BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
   add_subdirectory(UnitTests)
   add_subdirectory (BenchmarkTests)
 endif(BUILD_TESTING AND (PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+
+if(USE_SHARED)
+	set_target_properties(
+		Sorting_shared
+    	PROPERTIES
+    	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+    	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+    	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+	)
+else(USE_SHARED)
+    set_target_properties(
+		Sorting_static
+    	PROPERTIES
+    	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+    	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+    	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+	)
+endif(USE_SHARED)
+
+set_target_properties(
+	Main UnitTests BenchmarkTests
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
+)
+

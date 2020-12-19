@@ -40,5 +40,5 @@ test_script:
     }
   
 artifacts:
-  - path: build/%CONFIGURATION%
+  - path: build/out/%CONFIGURATION%
     name: artifacts
