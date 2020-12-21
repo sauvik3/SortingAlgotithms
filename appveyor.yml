@@ -43,5 +43,5 @@ test_script:
       }
   
 artifacts:
-  - path: artifacts.zip
+  - path: build/artifacts.zip
     name: artifacts
