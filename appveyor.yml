@@ -33,7 +33,7 @@ build:
   
 after_build:
   - ps: |
-      7z a artifacts.zip ./build/out/$env:CONFIGURATION/* ./Sorting/include/
+      7z a artifacts.zip ./out/$env:CONFIGURATION/* ../Sorting/include/
   
 test_script:
   - ps: |
