@@ -1,44 +1,47 @@
 version: 1.0.{build}
 
 image:
-- Visual Studio 2017
-- Visual Studio 2015
+  - Visual Studio 2017
+  - Visual Studio 2015
 
 platform:
   - Win32
   - x64
 
 configuration:
-- Debug
-- Release
+  - Debug
+  - Release
 
 environment:
   matrix:
-  - USE_SHARED: 0
-  - USE_SHARED: 1
+    - USE_SHARED: 0
+    - USE_SHARED: 1
   
 init:
-- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017" )
-- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015" )
-- echo %generator%
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017" )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015" )
+  - echo %generator%
 
 before_build:
-- cmd: |-
-    mkdir build
-    cd build
-    cmake .. -G %generator% -DUSE_SHARED=%USE_SHARED% -Dgtest_build_tests=OFF -Dgtest_build_samples=OFF -Dgmock_build_tests=OFF
+  - cmd: |-
+      mkdir build && cd build
+      cmake .. -G %generator% -DUSE_SHARED=%USE_SHARED% -Dgtest_build_tests=OFF -Dgtest_build_samples=OFF -Dgmock_build_tests=OFF
 
 build:
   project: build/ALL_BUILD.vcxproj
   verbosity: minimal
   
+after_build:
+  - ps: |
+      7z a artifacts.zip ./build/out/$env:CONFIGURATION/* ./Sorting/include/
+  
 test_script:
-- ps: |
-    ctest -C $env:CONFIGURATION --output-on-failure
-    if ($LastExitCode -ne 0) {
-        throw "Exec: $ErrorMessage"
-    }
+  - ps: |
+      ctest -C $env:CONFIGURATION --output-on-failure
+      if ($LastExitCode -ne 0) {
+          throw "Exec: $ErrorMessage"
+      }
   
 artifacts:
-  - path: build/out/%CONFIGURATION%
+  - path: artifacts.zip
     name: artifacts
