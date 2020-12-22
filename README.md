@@ -19,7 +19,6 @@ The project can build as cross-platform, and has option for building as static o
 
 To Do:
 * Write proper benchmark tests:
-   - Write benchmark tests using fixtures
    - Possibly estimate swap iterations
 * Look at the ABI for the library
 * Convert library to accept template interface
