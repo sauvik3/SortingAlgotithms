@@ -16,7 +16,7 @@ environment:
   matrix:
     - USE_SHARED: 0
     - USE_SHARED: 1
-  
+
 init:
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017" )
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015" )
@@ -30,18 +30,18 @@ before_build:
 build:
   project: build/ALL_BUILD.vcxproj
   verbosity: minimal
-  
+
 after_build:
   - ps: |
       7z a artifacts.zip ./out/$env:CONFIGURATION/* ../Sorting/include/
-  
+
 test_script:
   - ps: |
       ctest -C $env:CONFIGURATION --output-on-failure
       if ($LastExitCode -ne 0) {
           throw "Exec: $ErrorMessage"
       }
-  
+
 artifacts:
   - path: build/artifacts.zip
     name: artifacts
