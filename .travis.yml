@@ -2,8 +2,8 @@ dist: trusty
 language: cpp
 
 cache: # see https://docs.travis-ci.com/user/caching/
-- directories:
-  - $HOME/.cache
+  - directories:
+      - $HOME/.cache
 
 notifications:
   email: false
@@ -33,7 +33,7 @@ jobs:
       compiler: gcc
       addons: &gcc6
         apt:
-          packages: ["g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          packages: [ "g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind" ]
           sources: *apt_sources
 
     # GCC 6
@@ -41,7 +41,7 @@ jobs:
       compiler: gcc
       addons: &gcc6
         apt:
-          packages: ["g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          packages: [ "g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind" ]
           sources: *apt_sources
 
     # GCC 6
@@ -49,7 +49,7 @@ jobs:
       compiler: gcc
       addons: &gcc6
         apt:
-          packages: ["g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind"]
+          packages: [ "g++-6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "lcov", "astyle", "valgrind" ]
           sources: *apt_sources
 
 before_install:
