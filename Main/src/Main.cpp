@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iomanip>
-#include <array>
 #include <functional>
 #include <chrono>
 #include "Utils.h"

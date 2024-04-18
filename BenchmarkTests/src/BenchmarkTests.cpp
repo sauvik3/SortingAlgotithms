@@ -13,7 +13,7 @@
 namespace BenchmarkTestData
 {
 	template <typename T>
-	const std::vector<T> create_random_data(const std::size_t sz
+	std::vector<T> create_random_data(const std::size_t sz
 		, const T range_from = std::numeric_limits<T>::min()
 		, const T range_to = std::numeric_limits<T>::max())
 	{
