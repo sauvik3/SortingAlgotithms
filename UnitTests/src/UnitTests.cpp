@@ -14,12 +14,12 @@
 
 namespace UnitTestData
 {
-	template <int n>
-	const std::array<int, n> create_random_data(const int range_from = 0, const int range_to = 100) {
+	template <int N>
+	std::array<int, N> create_random_data(const int range_from = 0, const int range_to = 100) {
 		std::random_device rand_dev;
 		std::mt19937 generator(rand_dev());
 		std::uniform_int_distribution<int> distr(range_from, range_to);
-		std::array<int, n> data_gen;
+		std::array<int, N> data_gen={};
 
 		std::generate(data_gen.begin(), data_gen.end(), std::bind(distr, generator));
 		return  data_gen;
@@ -27,7 +27,7 @@ namespace UnitTestData
 
 	const auto bigArray = create_random_data<256>(std::numeric_limits<int>::min(),
 		std::numeric_limits<int>::max());
-	const std::vector<int> SortBigArray()
+	std::vector<int> SortBigArray()
 	{
 		std::vector<int> bigArraySorted(bigArray.begin(), bigArray.end());
 		std::sort(bigArraySorted.begin(), bigArraySorted.end());
